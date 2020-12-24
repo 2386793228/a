@@ -1,58 +1,94 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div class="md-example-child md-example-child-swiper md-example-child-swiper-3" >
+    <a href="javascript:window.triggerSwiper4()">Goto 2</a>
+    from: <span id="valueSwiper15">0</span>, to: <span id="valueSwiper16">0</span><br/>
+    <md-swiper
+    :autoplay=0
+      @before-change="beforeChange"
+      @after-change="afterChange"
+      ref="swiper">
+      <md-swiper-item :key="$index" v-for="(item, $index) in mulit">
+        <ul>
+          <li :key="$index1" v-for="(sub, $index1) in item">
+            <a href="javascript:void(0)" class="banner-item" :style="{'background': `${sub.color}`}">{{sub.text}}</a>
+          </li>
+        </ul>
+      </md-swiper-item>
+    </md-swiper>
   </div>
 </template>
 
 <script>
+import {Swiper, SwiperItem} from 'mand-mobile'
+import mulit from 'mand-mobile/components/swiper/demo/data/mulit-item'
+
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
+  name: 'swiper-demo',
+  /* DELETE */
+  title: '每屏多内容 <a href="javascript:window.triggerSwiper4()">Goto 2</a>',
+  titleEnUS: 'Multiple content per screen <a href="javascript:window.triggerSwiper3()">Goto 2</a>',
+  describe: '复杂结构，每屏显示一组多条内容',
+  describeEnUS: 'Complex structure, displaying a group of multiple items per screen',
+  message:
+    '@before-change: from: <span id="valueSwiper15">0</span>, to: <span id="valueSwiper16">0</span><br/>@after-change: from: <span id="valueSwiper17">0</span>, to: <span id="valueSwiper18">0</span>',
+  /* DELETE */
+  components: {
+    [Swiper.name]: Swiper,
+    [SwiperItem.name]: SwiperItem,
+  },
+  data() {
+    return {
+      mulit,
+    }
+  },
+  mounted() {
+    window.triggerSwiper4 = () => {
+      this.goto()
+    }
+  },
+  methods: {
+    setValue(id, value) {
+      document.querySelector(id) && (document.querySelector(id).innerHTML = value)
+    },
+    beforeChange(from, to) {
+      this.setValue('#valueSwiper15', from)
+      this.setValue('#valueSwiper16', to)
+    },
+    afterChange(from, to) {
+      this.setValue('#valueSwiper17', from)
+      this.setValue('#valueSwiper18', to)
+    },
+    goto() {
+      this.$refs.swiper.goto(2)
+    },
+    a(){
+      console.log('a');
+    }
+  
+  },
 }
+
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+<style lang="stylus">
+.md-example-child-swiper-3
+  height 250px
+  li
+    list-style none
+    float left
+    width 33%
+    height 125px
+  .banner-item
+    float left
+    width 100%
+    height 100%
+    line-height 125px
+    text-align center
+    font-size 28px
+    color #FFF
+    box-align center
+    align-items center
+    box-pack center
+    justify-content center
+    text-decoration-line none
 </style>
