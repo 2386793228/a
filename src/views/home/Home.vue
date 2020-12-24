@@ -66,6 +66,7 @@ export default {
   },
   data() {
     return {
+      kj:'a',
       a: "我是home组件",
       lastTime: "2018-07-15 17:33:41",
       swiperitem: [
